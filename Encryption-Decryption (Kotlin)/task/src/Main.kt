@@ -1,6 +1,6 @@
 package encryptdecrypt
 
-fun main() {
+fun main(args: Array<String>) {
 //    val input = "we found a treasure"
 //    val alpha = "abcdefghijklmnopqrstuvwxyz"
 //    val reversedAlpha = alpha.reversed()
@@ -11,17 +11,24 @@ fun main() {
 //        } else sb.append(" ")
 //    }
 //    println("${sb.toString()}!")
-    val alpha = "abcdefghijklmnopqrstuvwxyz"
-    val command = readln()
-    val phraseInput = readln()
-    val keyNum = readln().toInt()
+//    val alpha = "abcdefghijklmnopqrstuvwxyz"
+    val modeInd = args.indexOfFirst { it == "-mode" }
+    val mode = if (modeInd != -1) args[modeInd + 1] else "enc"
+    val keyInd = args.indexOfFirst { it == "-key"}
+    val key = if (keyInd != -1) args[keyInd + 1].toInt() else 0
+    val dataInd = args.indexOfFirst { it == "-data" }
+    val data = if (keyInd != -1) args[dataInd + 1] else ""
+//    val command = readln()
+//    val phraseInput = readln()
+//    val keyNum = readln().toInt()
     //val charKey = alpha[keyNum - 1]
-    val cc = CaesarCipher(keyNum)
-    if (command == "enc") {
-        println(cc.encryptMessage(phraseInput))
+
+    val cc = CaesarCipher(key)
+    if (mode == "enc") {
+        println(cc.encryptMessage(data))
     }
-    if (command == "dec") {
-        println(cc.decryptMessage(phraseInput))
+    if (mode == "dec") {
+        println(cc.decryptMessage(data))
     }
 }
 
