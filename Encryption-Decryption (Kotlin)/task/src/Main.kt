@@ -12,19 +12,25 @@ fun main() {
 //    }
 //    println("${sb.toString()}!")
     val alpha = "abcdefghijklmnopqrstuvwxyz"
+    val command = readln()
     val phraseInput = readln()
     val keyNum = readln().toInt()
-    val charKey = alpha[keyNum - 1]
-    val cc = CaesarCipher(charKey)
-    println(cc.encryptMessage(phraseInput))
+    //val charKey = alpha[keyNum - 1]
+    val cc = CaesarCipher(keyNum)
+    if (command == "enc") {
+        println(cc.encryptMessage(phraseInput))
+    }
+    if (command == "dec") {
+        println(cc.decryptMessage(phraseInput))
+    }
 }
 
-class CaesarCipher(val key: Char) {
-    val alpha = "abcdefghijklmnopqrstuvwxyz"
-    var cipherAlpha : String? = null
-    init {
-        cipherAlpha = alpha.substringAfter(key) + alpha.substringBefore(key)
-    }
+class CaesarCipher(val key: Int) {
+//    val alpha = "abcdefghijklmnopqrstuvwxyz"
+//    var cipherAlpha : String? = null
+//    init {
+//        cipherAlpha = alpha.substringAfter(key) + alpha.substringBefore(key)
+//    }
 
     fun encryptMessage(msg: String): String {
         val sb = StringBuilder()
@@ -34,12 +40,18 @@ class CaesarCipher(val key: Char) {
         return sb.toString()
     }
 
-    fun encryptChar(ch: Char) : Char {
-        if (ch.isLetter()) {
-            val indAlpha = alpha.indexOf(ch)
-            return cipherAlpha!![indAlpha]
-        } else {
-            return ch
+    fun encryptChar(ch: Char): Char {
+        return (ch.code + key).toChar()
+    }
+
+    fun decryptMessage(msg: String): String {
+        val sb = StringBuilder()
+        for (ch in msg) {
+            sb.append(decryptChar(ch))
         }
+        return sb.toString()
+    }
+    fun decryptChar(ch: Char): Char {
+        return (ch.code - key).toChar()
     }
 }
