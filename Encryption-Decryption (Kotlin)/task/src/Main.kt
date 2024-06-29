@@ -1,7 +1,6 @@
 package encryptdecrypt
 
 import java.io.File
-import java.io.FileWriter
 import java.io.IOException
 
 fun main(args: Array<String>) {
